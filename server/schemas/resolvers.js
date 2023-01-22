@@ -3,7 +3,7 @@ const { Book, User } = require('../models');
 const { signToken } = require('../utils/auth')
 
 //based on user-controller
-const reslovers = {
+const resolvers = {
     Query: {
         //will include actions to retrive info. From user-controller: getSingleUser 
         
@@ -16,7 +16,7 @@ const reslovers = {
     Mutation: {
         //will include actions to create or update things like: createUser, saveBook, removeBook, login
 
-        createUser: async (parent, args) => {
+        addUser: async (parent, args) => {
             const user = await User.create(args);
             return user;
         },
@@ -42,7 +42,7 @@ const reslovers = {
         login: async (parent, { email, username, password }) => {
             const user = await Profile.findOne({ $or: [{ username: username }, { email: email }] });
             if (!user) {
-                return reslovers.status(400).json({ message: "Can't find this user" })
+                return resolvers.status(400).json({ message: "Can't find this user" })
             };
 
             const correctPw = await  user.isCorrectPassword(password);
@@ -57,4 +57,4 @@ const reslovers = {
     },
 }
 
-module.exports = reslovers;
+module.exports = resolvers;
