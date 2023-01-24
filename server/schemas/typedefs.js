@@ -1,7 +1,9 @@
+//Not sure if I got the saveBook and removeBook mutations right. 
+
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-    type Book: {
+    type Book {
         authors: String
         description: String
         bookId: String
@@ -10,28 +12,28 @@ const typeDefs = gql`
         title: String
     }
 
-    type User: {
+    type User {
         _id: ID
         username: String
         email: String
-        bookCount: Integer
+        bookCount: Int
         savedBooks: [Book]
     }
 
-    type Auth: {
+    type Auth {
         token: ID!
         user: User
     }
 
-    type Query: {
+    type Query {
         me: User
     }
 
-    type Mutation: {
+    type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
-        saveBook(_id: ID!, savedBook: Book!): User
-        removeBook(_id: ID!, savedBooks: Book!): User
-        login(email: String!, password: String!): Auth
+        saveBook(_id: ID!, savedBooks: String!): User
+        removeBook(_id: ID!, savedBooks: String!): User
+        login(email: String!, username: username!, password: String!): Auth
     }
 `;
 
